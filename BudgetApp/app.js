@@ -5,7 +5,7 @@ const budgetAmount = document.getElementById('budgetAmount');
 const balanceAmount = document.getElementById('balanceAmount');
 
 function getBudgetAmount(amount) {
-	// Falls amount nicht vorhanden
+	// If amount  filed is empty
 	if (!amount) {
 		//we created a condition that checks if the user passed in an empty value or not.
 		// rote umrandung
@@ -33,3 +33,69 @@ addForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	getBudgetAmount(amountInput.value);
 });
+
+//function thath display the list of expenses
+const expForm = document.getElementsById('expForm');
+let expName = document.getElementsById('expname');
+let expNumber = document.getElementsById('expNumber');
+
+let id = 0;
+// array with expenses
+let details = [];
+
+function addExpenses(name, number) {
+	//if number or name ist empty
+	if (!name.length || !number.length) {
+		expName.style.border = '1px solid #b80c09';
+		expName.placeholder = 'input can not be empty';
+		expName.style.color = '#b80c09';
+
+		expNumber.style.border = '1px solid #b80c09';
+		expNumber.placeholder = 'input can not be empty';
+		expNumber.style.color = '#b80c09';
+
+		setTimeout(() => {
+			expName.style.color = '#49507';
+			expName.style.border = '1px solid gray';
+			expName.placeholder = 'input can not be empty';
+
+			expNumber.style.color = '#49507';
+			expNumber.style.border = '1px solid gray';
+			expNumber.placeholder = 'input can not be empty';
+		}, 3000);
+	} else {
+		// If number and name ist not empty do the following
+		// create an object and signs the id we created to the id in the object,
+		// the expense name to the name in the object, and the expense amount to amount in the object.
+		const userExp = {
+			id: id,
+			name: name,
+			//converts a number that is passed as a string to a number
+			number: parseInt(number)
+		};
+		//push the expenses in the detail array
+		details.push(userExp);
+		displayExp(details);
+		id++;
+		expName.value = '';
+		expNumber.value = '';
+	}
+}
+// Expense Button EventListener
+expForm.addEventListener('submit', (e) => {
+	e.preventDefault();
+	addExpenses(expName.value, expNumber.value);
+});
+
+// displayExp() funvtion that displays the expemse list after the user adds an Expense
+// Parameter: Array with the Objects wich we created
+function displayExp(details) {
+    expValue.innerHTML = null;
+    for(i=0; i < details.length; i++){
+        expValue.innerHTML += `
+        
+        
+        
+        `
+    }
+}
