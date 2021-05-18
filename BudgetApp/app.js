@@ -90,12 +90,41 @@ expForm.addEventListener('submit', (e) => {
 // displayExp() funvtion that displays the expemse list after the user adds an Expense
 // Parameter: Array with the Objects wich we created
 function displayExp(details) {
-    expValue.innerHTML = null;
-    for(i=0; i < details.length; i++){
-        expValue.innerHTML += `
-        
-        
-        
-        `
-    }
+	expValue.innerHTML = null;
+	// For every entry in Details[] create a HTML Div with following settings
+	for (i = 0; i < details.length; i++) {
+		expValue.innerHTML += `
+			<div class="expvalue" id="${details[i].id}">
+				<div id="expTitlename" class="exp">
+					<p>${details[i].name}</p>
+				</div>
+				<div id="expValueAmount" class="exp">
+					<p>
+						<span>$</span>${details[i].number}
+					</p>
+				</div>
+				<div>
+					<p>
+						<button id="${details[id].id}" onclick="editExpDetails(${details[i].id})">
+							<img src="image/trash.svg" width="15" alt="" />
+						</button>
+						<button id="${details[i].id}" onclick="delExpenseDetails(${details[i].id})">
+							<img src="image/trash.svg" width="15" alt="" />
+						</button>
+					</p>
+				</div>
+			</div>
+		`;
+	}
+	calcExpenses();
+	displayExpenses.style.display = 'block';
+}
+
+function calcExpenses() {
+	let totalExp = 0;
+	for (i = 0; i < details.length; i++) {
+		totalExp = details[i].number + totalExp;
+	}
+	expensesAmount.innerText = totalExp;
+	updateBalance();
 }
