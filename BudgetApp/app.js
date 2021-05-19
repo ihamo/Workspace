@@ -1,8 +1,11 @@
+// Input Number
 const amountInput = document.getElementById('number');
+// Form ID
 const addForm = document.getElementById('addForm');
 
 const budgetAmount = document.getElementById('budgetAmount');
 const balanceAmount = document.getElementById('balanceAmount');
+const expenseForm = document.getElementById('expense-form');
 
 function getBudgetAmount(amount) {
 	// If amount  filed is empty
@@ -18,7 +21,7 @@ function getBudgetAmount(amount) {
 			amountInput.style.border = '1px solid gray';
 		}, 3000);
 	} else {
-		//Falls eine Zahl eingegeben wurde, führe folgenden Code aus
+		// If no error do...
 		budgetAmount.innerText = amount;
 		balanceAmount.innerText = amount;
 		expenseForm.style.display = 'block';
@@ -31,13 +34,14 @@ function getBudgetAmount(amount) {
 // we invoked or called the getBudgetAmount() function when we click on the submit button.
 addForm.addEventListener('submit', (e) => {
 	e.preventDefault();
+	// Amount Input is document.getElementById('number');
 	getBudgetAmount(amountInput.value);
 });
 
 //function thath display the list of expenses
-const expForm = document.getElementsById('expForm');
-let expName = document.getElementsById('expname');
-let expNumber = document.getElementsById('expNumber');
+const expForm = document.getElementById('expForm');
+let expName = document.getElementById('expname');
+let expNumber = document.getElementById('expNumber');
 
 let id = 0;
 // array with expenses
@@ -87,7 +91,7 @@ expForm.addEventListener('submit', (e) => {
 	addExpenses(expName.value, expNumber.value);
 });
 
-// displayExp() funvtion that displays the expemse list after the user adds an Expense
+// displayExp() function that displays the expemse list after the user adds an Expense
 // Parameter: Array with the Objects wich we created
 function displayExp(details) {
 	expValue.innerHTML = null;
@@ -120,11 +124,18 @@ function displayExp(details) {
 	displayExpenses.style.display = 'block';
 }
 
+// Calculate all Expenses
 function calcExpenses() {
 	let totalExp = 0;
+	// loop trough expense Array and calculate Expense Cost
 	for (i = 0; i < details.length; i++) {
 		totalExp = details[i].number + totalExp;
 	}
 	expensesAmount.innerText = totalExp;
 	updateBalance();
+}
+
+// Update Balance Amount
+function updateBalance() {
+	balanceAmount.innerText = parseInt(budgetAmount.innerText) - parseInt(expensesAmount.innerText);
 }
