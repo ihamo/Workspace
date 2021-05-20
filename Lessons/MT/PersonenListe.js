@@ -29,7 +29,7 @@ const Ali = new Person('Ali', 30, 'Kirchfeld straße 3, 51643 Gummersbach');
 const Heike = new Person('Heike', 30, 'Gustavstraße 6, 50823 Köln');
 const Elli = new Person('Elli', 31, 'Pivitsheider Straße 73, 32832 Augustdorf');
 
-// function addPerson()
+// prototype Function addPerson()
 Person.prototype.addPerson = function() {
 	const name = this.name;
 	const age = this.age;
@@ -39,12 +39,19 @@ Person.prototype.addPerson = function() {
 
 	return Persons.push({ name, age, adress, id });
 };
+
+// Function addPerson()
+const addPerson = function(name, age, adress) {
+	id++;
+	return Persons.push({ name, age, adress, id });
+};
+
 // TODO !!
 Person.prototype.addToDoc = function() {};
 
 function addExpenses(name, age, adress) {
 	//if number or name ist empty
-	if (!name.length || !number.length) {
+	if (!name.length || !age.length) {
 		personName.style.border = '1px solid #b80c09';
 		personName.placeholder = 'input can not be empty';
 		personName.style.color = '#b80c09';
@@ -75,26 +82,25 @@ function addExpenses(name, age, adress) {
 		// create an object and signs the id we created to the id in the object,
 		// the expense name to the name in the object, and the expense amount to amount in the object.
 		const Persona = {
-			id: id,
 			name: name,
 			//converts a number that is passed as a string to a number
 			age: parseInt(age),
-			adress: adress
+			adress: adress,
+			id: id
 		};
 		//push the expenses in the detail array
-		details.push(Persona);
+		Persons.push(Persona);
 		id++;
-		expName.value = '';
-		expNumber.value = '';
+		personenName.value = '';
+		personenAlter.value = '';
+		personenLocation.value = '';
 	}
 }
-
-
 
 // Submit Button EventListener
 personForm.addEventListener('submit', (e) => {
 	e.preventDefault();
-	addPerson(personenName.value, personenAlter.value, personenLocation.value);
+	addExpenses(personenName.value, personenAlter.value, personenLocation.value);
 });
 
 // Juan.addPerson();
