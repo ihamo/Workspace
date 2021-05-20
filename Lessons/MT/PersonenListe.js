@@ -89,6 +89,14 @@ function addExpenses(name, age, adress) {
 	}
 }
 
+
+
+// Submit Button EventListener
+personForm.addEventListener('submit', (e) => {
+	e.preventDefault();
+	addPerson(personenName.value, personenAlter.value, personenLocation.value);
+});
+
 // Juan.addPerson();
 // Ali.addPerson();
 // Heike.addPerson();
