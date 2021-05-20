@@ -3,7 +3,7 @@ String.prototype.grumpus = () => {
 	console.log('Go away');
 };
 
-//Exmaple how to use grumpus after declaration
+//Example how to use grumpus after declaration
 const RandomString = 'Random String';
 RandomString.grumpus();
 
