@@ -1,6 +1,6 @@
 //Input Felder Für Personenangaben
 // Form ID
-const personForm = document.getElementById('Personform');
+const personenForm = document.getElementById('Personform');
 // Input Number
 const personenName = document.getElementById('Name');
 const personenAlter = document.getElementById('Alter');
@@ -51,31 +51,31 @@ Person.prototype.addToDoc = function() {};
 
 function addExpenses(name, age, adress) {
 	//if number or name ist empty
-	if (!name.length || !age.length) {
-		personName.style.border = '1px solid #b80c09';
-		personName.placeholder = 'input can not be empty';
-		personName.style.color = '#b80c09';
+	if (!name.length || !age.length || !adress.length) {
+		personenName.style.border = '1px solid #b80c09';
+		personenName.placeholder = 'input can not be empty';
+		personenName.style.color = '#b80c09';
 
-		personAlter.style.border = '1px solid #b80c09';
-		personAlter.placeholder = 'input can not be empty';
-		personAlter.style.color = '#b80c09';
+		personenAlter.style.border = '1px solid #b80c09';
+		personenAlter.placeholder = 'input can not be empty';
+		personenAlter.style.color = '#b80c09';
 
-		personAdresse.style.border = '1px solid #b80c09';
-		personAdresse.placeholder = 'input can not be empty';
-		personAdresse.style.color = '#b80c09';
+		personenLocation.style.border = '1px solid #b80c09';
+		personenLocation.placeholder = 'input can not be empty';
+		personenLocation.style.color = '#b80c09';
 
 		setTimeout(() => {
-			personName.style.color = '#49507';
-			personName.style.border = '1px solid gray';
-			personName.placeholder = 'input can not be empty';
+			personenName.style.color = '#49507';
+			personenName.style.border = '1px solid gray';
+			personenName.placeholder = 'input can not be empty';
 
-			personAlter.style.color = '#49507';
-			personAlter.style.border = '1px solid gray';
-			personAlter.placeholder = 'input can not be empty';
+			personenAlter.style.color = '#49507';
+			personenAlter.style.border = '1px solid gray';
+			personenAlter.placeholder = 'input can not be empty';
 
-			personAdresse.style.color = '#49507';
-			personAdresse.style.border = '1px solid gray';
-			personAdresse.placeholder = 'input can not be empty';
+			personenLocation.style.color = '#49507';
+			personenLocation.style.border = '1px solid gray';
+			personenLocation.placeholder = 'input can not be empty';
 		}, 3000);
 	} else {
 		// If number and name ist not empty do the following
@@ -98,7 +98,7 @@ function addExpenses(name, age, adress) {
 }
 
 // Submit Button EventListener
-personForm.addEventListener('submit', (e) => {
+personenForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	addExpenses(personenName.value, personenAlter.value, personenLocation.value);
 });
