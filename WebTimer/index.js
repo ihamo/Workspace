@@ -20,20 +20,29 @@ class Timer {
 		this.durationInput = durationInput;
 		this.startButton = startButton;
 		this.pauseButton = pauseButton;
+		this.started = false;
+
+		// this.timeLeft = 30;
 
 		this.startButton.addEventListener('click', this.start);
 		this.pauseButton.addEventListener('click', this.pause);
 	}
 
 	// Timer count down
+
 	start = () => {
 		// if we click start, the start function waits 1000ms to start, because we set
 		// the intervall to 1000ms, to start immediately, we have to call tick the first time without to wait
-		this.tick();
-		this.interval = setInterval(this.tick, 1000);
+		if (!this.started) {
+			this.tick();
+			this.interval = setInterval(this.tick, 1000);
+		}
+		this.started = true;
 	};
 
 	tick = () => {
+		// this.timeLeft = this.timeLeft -1;
+		// this.durationInput.value = this.timeleft;
 		if (this.timeRemaining <= 0) {
 			this.pause();
 		} else {
@@ -43,6 +52,7 @@ class Timer {
 
 	pause = () => {
 		clearInterval(this.interval);
+		this.started = false;
 	};
 
 	// getter & Setter to update and storing data in the DOM
