@@ -22,11 +22,42 @@ class Timer {
 		this.pauseButton = pauseButton;
 
 		this.startButton.addEventListener('click', this.start);
+		this.pauseButton.addEventListener('click', this.pause);
 	}
 
+	// Timer count down
 	start = () => {
-		console.log('Time to start the Timer!');
+		// if we click start, the start function waits 1000ms to start, because we set
+		// the intervall to 1000ms, to start immediately, we have to call tick the first time without to wait
+		this.tick();
+		this.interval = setInterval(this.tick, 1000);
+	};
+
+	tick = () => {
+		if (this.timeRemaining <= 0) {
+			this.pause();
+		} else {
+			this.timeRemaining = this.timeRemaining - 1;
+		}
+	};
+
+	pause = () => {
+		clearInterval(this.interval);
+	};
+
+	// getter & Setter to update and storing data in the DOM
+
+	// Get the Time
+	get timeRemaining() {
+		return parseFloat(this.durationInput.value);
 	}
+	// Set the Time
+	set timeRemaining(time) {
+		this.durationInput.value = time;
+	}
+
+	// alternative Solution
+	// this.startButton.addEventListener('click', this.start.bind(this));
 }
 
 const durationInput = document.querySelector('#duration');
@@ -34,27 +65,3 @@ const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
 
 const timer = new Timer(durationInput, startButton, pauseButton);
-
-// 3 ways to determining the value of this
-
-// 1. Did you define the function with an arrow function
-// Write 'console.log(this)' on tzhe first valid line above the arrowfunction.
-// Value of 'this' in the arrow function will be equal to that console log
-
-const colors = {
-	printColor() {
-		console.log(this);
-		const printThis = () => {
-			console.log(this);
-		};
-		printThis();
-	}
-};
-
-colors.printColor();
-
-// 2. Did you call 'bind', 'call' or 'apply' on the function when you invoked it ?
-// 'this' is equal to the first argumenten of 'bind', 'equal' or 'apply'
-
-// 3. All other cases
-// 'this' is equal to whatever is to the left of the '.' in the method call
