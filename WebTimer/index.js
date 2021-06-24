@@ -16,11 +16,15 @@
 // The Timer Class has nothing todo with the animated border
 
 class Timer {
-	constructor(durationInput, startButton, pauseButton) {
+	constructor(durationInput, startButton, pauseButton, callbacks) {
 		this.durationInput = durationInput;
 		this.startButton = startButton;
 		this.pauseButton = pauseButton;
 		this.started = false;
+		// check if callback is passed otherwise an error will occur
+		if (callbacks) {
+			this.onStart = callbacks.onStart;
+		}
 
 		// this.timeLeft = 30;
 
@@ -33,6 +37,10 @@ class Timer {
 	start = () => {
 		// if we click start, the start function waits 1000ms to start, because we set
 		// the intervall to 1000ms, to start immediately, we have to call tick the first time without to wait
+
+		if (this.onStart) {
+			this.onStart();
+		}
 		if (!this.started) {
 			this.tick();
 			this.interval = setInterval(this.tick, 1000);
@@ -74,4 +82,10 @@ const durationInput = document.querySelector('#duration');
 const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
 
-const timer = new Timer(durationInput, startButton, pauseButton);
+const timer = new Timer(durationInput, startButton, pauseButton, {
+	onStart() {
+		console.log('Timer has started');
+	},
+	onTick() {},
+	onComplete() {}
+});
