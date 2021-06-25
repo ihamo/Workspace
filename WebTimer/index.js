@@ -24,6 +24,8 @@ class Timer {
 		// check if callback is passed otherwise an error will occur
 		if (callbacks) {
 			this.onStart = callbacks.onStart;
+			this.onTick = callbacks.onTick;
+			this.onComplete = callbacks.onComplete;
 		}
 
 		// this.timeLeft = 30;
@@ -49,6 +51,9 @@ class Timer {
 	};
 
 	tick = () => {
+		if (this.onTick) {
+			this.onTick();
+		}
 		// this.timeLeft = this.timeLeft -1;
 		// this.durationInput.value = this.timeleft;
 		if (this.timeRemaining <= 0) {
@@ -64,7 +69,6 @@ class Timer {
 	};
 
 	// getter & Setter to update and storing data in the DOM
-
 	// Get the Time
 	get timeRemaining() {
 		return parseFloat(this.durationInput.value);
@@ -86,6 +90,11 @@ const timer = new Timer(durationInput, startButton, pauseButton, {
 	onStart() {
 		console.log('Timer has started');
 	},
-	onTick() {},
-	onComplete() {}
+	onTick() {
+		console.log('Timer ticked down');
+		console.log(this.timeRemaining);
+	},
+	onComplete() {
+		console.log('Timer is Complete');
+	}
 });
