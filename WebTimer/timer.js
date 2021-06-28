@@ -39,27 +39,32 @@ class Timer {
 	start = () => {
 		// if we click start, the start function waits 1000ms to start, because we set
 		// the intervall to 1000ms, to start immediately, we have to call tick the first time without to wait
-
+		// check if onStart() function was passed as an callback
 		if (this.onStart) {
-			this.onStart();
+			this.onStart(this.timeRemaining);
 		}
 		if (!this.started) {
 			this.tick();
-			this.interval = setInterval(this.tick, 1000);
+			this.interval = setInterval(this.tick, 50);
 		}
 		this.started = true;
 	};
 
 	tick = () => {
-		if (this.onTick) {
-			this.onTick();
-		}
 		// this.timeLeft = this.timeLeft -1;
 		// this.durationInput.value = this.timeleft;
 		if (this.timeRemaining <= 0) {
 			this.pause();
+			// check if callback is passed, if so called it
+			if (this.onComplete) {
+				this.onComplete();
+			}
 		} else {
-			this.timeRemaining = this.timeRemaining - 1;
+			this.timeRemaining = this.timeRemaining - 0.05;
+			// check if callback is passed, if so called it
+			if (this.onTick) {
+				this.onTick(this.timeRemaining);
+			}
 		}
 	};
 
@@ -75,7 +80,7 @@ class Timer {
 	}
 	// Set the Time
 	set timeRemaining(time) {
-		this.durationInput.value = time;
+		this.durationInput.value = time.toFixed(2);
 	}
 
 	// alternative Solution
