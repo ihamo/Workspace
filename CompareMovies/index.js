@@ -31,22 +31,37 @@ const fetchData = async (searchTerm) => {
 	console.log(response.data);
 };
 
-const input = document.querySelector('searchInput');
+const SearchInput = document.querySelector('#SearchInput');
 
 // If the user start tipping, the setTimeOut Method will wait 2 Sec before show the result
 // to prevent to many requests.
 // If the user start tipping the event occur and will set up a request, we will Kill the request if the User is still tipping
 
-let timeOutId;
-const onInput = (event) => {
-	// event.target.value -> input value
-	// pass the input value as an argument
-	if (timeOutId) {
-		clearTimeout(timeOutId);
-	}
-	timeOutId = setTimeout(() => {
-		fetchData(event.target.value);
-	}, 2000);
+const debounce = (func) => {
+	let timeOutId;
+	return (...args) => {
+		if (timeOutId) {
+			clearTimeout(timeOutId);
+		}
+		timeOutId = setTimeout(() => {
+			func.apply(null, args);
+		}, 2000);
+	};
 };
 
-searchInput.addEventListener('input', onInput);
+// Event Function
+const onInput = debounce((event) => {
+	// event.target.value -> input value
+	// pass the input value as an argument
+	fetchData(event.target.value);
+});
+
+// EventListener, passed the Event Function
+SearchInput.addEventListener('input', onInput);
+
+// Same Function like above
+// const onInput = (event) => {
+// 	fetchData(event.target.value);
+// };
+
+// SearchInput.addEventListener('input', debounce(onInput));
