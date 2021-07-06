@@ -22,7 +22,15 @@ const SearchInput = document.querySelector('#SearchInput');
 const onInput = async (event) => {
 	// event.target.value -> input value
 	// pass the input value as an argument
-	const Movies = await fetchData(event.target.value);
+	const movies = await fetchData(event.target.value);
+
+	for (let movie of movies) {
+		const div = document.createElement('div');
+		div.innerHTML = `<img src="${movie.Poster}" />
+		<h1>${movie.Title}</h1>`;
+
+		document.querySelector('#target').appendChild(div);
+	}
 };
 
 // EventListener, passed the Event Function
