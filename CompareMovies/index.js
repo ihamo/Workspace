@@ -12,9 +12,27 @@ const fetchData = async (searchTerm) => {
 			s: searchTerm
 		}
 	});
+
+	// if the Response give us an error
+	if (response.data.Error) {
+		console.log('no Movies found');
+		return [];
+	}
+
 	console.log(response.data.Search);
 	return response.data.Search;
 };
+
+const root = document.querySelector('.autocomplete');
+root.innerHTML = `
+<label><b>Search for a Movie</b></label>
+<input class="input" />
+<div class="dropdown">
+	<div class="dropdown-menu">
+		<div class="dropdown-content results"</div>
+	</div>
+</div>
+`;
 
 const SearchInput = document.querySelector('#SearchInput');
 
