@@ -34,7 +34,9 @@ root.innerHTML = `
 </div>
 `;
 
-const SearchInput = document.querySelector('#SearchInput');
+const input = document.querySelector('input');
+const dropdown = document.querySelector('.dropdown');
+const resultsWrapper = document.querySelector('.results');
 
 // Event Function
 const onInput = async (event) => {
@@ -42,17 +44,32 @@ const onInput = async (event) => {
 	// pass the input value as an argument
 	const movies = await fetchData(event.target.value);
 
-	for (let movie of movies) {
-		const div = document.createElement('div');
-		div.innerHTML = `<img src="${movie.Poster}" />
-		<h1>${movie.Title}</h1>`;
+	dropdown.classList.add('is-active');
 
-		document.querySelector('#target').appendChild(div);
+	for (let movie of movies) {
+		const option = document.createElement('a');
+
+		option.classList.add('dropdown-item');
+		option.innerHTML = `<img src="${movie.Poster}" />
+		${movie.Title}`;
+
+		resultsWrapper.appendChild(option);
 	}
 };
 
+// function removeOptions(selectElement) {
+// 	var i,
+// 		L = selectElement.options.length - 1;
+// 	for (i = L; i >= 0; i--) {
+// 		selectElement.remove(i);
+// 	}
+// }
+
+// // using the function:
+// removeOptions(dropdown);
+
 // EventListener, passed the Event Function
-SearchInput.addEventListener('input', debounce(onInput, 1000));
+input.addEventListener('input', debounce(onInput, 1000));
 
 // Same Function like above
 // const onInput = (event) => {
