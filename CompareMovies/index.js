@@ -45,6 +45,7 @@ const onInput = async (event) => {
 	const movies = await fetchData(event.target.value);
 
 	dropdown.classList.add('is-active');
+	resultsWrapper.innerHTML = '';
 
 	for (let movie of movies) {
 		const option = document.createElement('a');
