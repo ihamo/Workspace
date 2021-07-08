@@ -45,6 +45,11 @@ const onInput = async (event) => {
 	// pass the input value as an argument
 	const movies = await fetchData(event.target.value);
 
+	// Close dropdown when input is empty after a search
+	if (!movies.length) {
+		dropdown.classList.remove('is-active');
+		return;
+	}
 	// open dropdown to show results
 	dropdown.classList.add('is-active');
 	// clear results before do a new search
@@ -59,6 +64,16 @@ const onInput = async (event) => {
 		option.classList.add('dropdown-item');
 		option.innerHTML = `<img src="${imgSrc}" />
 		${movie.Title}`;
+
+		// EventListening for a Click on a Item in the Dropdown Menu
+		option.addEventListener('click', (event) => {
+			// close dropdown when user click on an Item in the dropdown
+			dropdown.classList.remove('is-active');
+			// when a user click on a item in the dropdown menu, change
+			// the input value to the Title of that Movie
+			input.value = movie.Title;
+			console.log(event.target);
+		});
 
 		resultsWrapper.appendChild(option);
 	}
