@@ -13,7 +13,7 @@ const fetchData = async (searchTerm) => {
 		}
 	});
 
-	// if the Response give us an error
+	// if the Response give us an error, cause no Movie was found
 	if (response.data.Error) {
 		console.log('no Movies found');
 		return [];
@@ -24,6 +24,7 @@ const fetchData = async (searchTerm) => {
 };
 
 const root = document.querySelector('.autocomplete');
+
 root.innerHTML = `
 <label><b>Search for a Movie</b></label>
 <input class="input" />
@@ -44,33 +45,34 @@ const onInput = async (event) => {
 	// pass the input value as an argument
 	const movies = await fetchData(event.target.value);
 
+	// open dropdown to show results
 	dropdown.classList.add('is-active');
+	// clear results before do a new search
 	resultsWrapper.innerHTML = '';
 
+	// for every Movie entrie create an anchor element
 	for (let movie of movies) {
 		const option = document.createElement('a');
+		// Show no Poster if not avaliable
+		const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
 
 		option.classList.add('dropdown-item');
-		option.innerHTML = `<img src="${movie.Poster}" />
+		option.innerHTML = `<img src="${imgSrc}" />
 		${movie.Title}`;
 
 		resultsWrapper.appendChild(option);
 	}
 };
 
-// function removeOptions(selectElement) {
-// 	var i,
-// 		L = selectElement.options.length - 1;
-// 	for (i = L; i >= 0; i--) {
-// 		selectElement.remove(i);
-// 	}
-// }
-
-// // using the function:
-// removeOptions(dropdown);
-
 // EventListener, passed the Event Function
 input.addEventListener('input', debounce(onInput, 1000));
+
+// close dropdown menu whenever user click outside the dropdown root element
+document.addEventListener('click', (event) => {
+	if (!root.contains(event.target)) {
+		dropdown.classList.remove('is-active');
+	}
+});
 
 // Same Function like above
 // const onInput = (event) => {
