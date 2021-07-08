@@ -72,7 +72,8 @@ const onInput = async (event) => {
 			// when a user click on a item in the dropdown menu, change
 			// the input value to the Title of that Movie
 			input.value = movie.Title;
-			console.log(event.target);
+			// When a user click on a Movie
+			onMovieSelect(movie);
 		});
 
 		resultsWrapper.appendChild(option);
@@ -95,3 +96,23 @@ document.addEventListener('click', (event) => {
 // };
 
 // SearchInput.addEventListener('input', debounce(onInput));
+
+const onMovieSelect = async (movie) => {
+	console.log(movie);
+	const response = await axios.get('http://www.omdbapi.com', {
+		params: {
+			apikey: '783e8d68',
+			i: movie.imdbID
+		}
+	});
+	console.log(response.data);
+
+	const movieInfo = document.querySelector('.movie');
+
+	movieInfo.innerHTML = `<div>
+	<h1>${movie.Title}</h1>
+	<img src="${movie.Poster}"/><br/><br/>
+	<p>${response.data.Actors}</p>
+	<p>${response.data.Metascore}</p>
+	</div>`;
+};
