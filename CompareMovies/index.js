@@ -107,12 +107,24 @@ const onMovieSelect = async (movie) => {
 	});
 	console.log(response.data);
 
-	const movieInfo = document.querySelector('.movie');
+	
+};
 
-	movieInfo.innerHTML = `<div>
-	<h1>${movie.Title}</h1>
-	<img src="${movie.Poster}"/><br/><br/>
-	<p>${response.data.Actors}</p>
-	<p>${response.data.Metascore}</p>
-	</div>`;
+
+const movieTemplate = (movieDetail) => {
+	return `<article class="media">
+				<figure class="media-left">
+					<p class="image">
+						<img src="${movieDetail.Poster}"
+					</p>
+				</figure>
+				<div class="media-content>">
+					<div class="content">
+						<h1>${movieDetail.Title}</h1>
+						<h4>${movieDetail.Genre}</h4>
+						<p>${movieDetail.Plot}</p>
+					</div>
+				</div>
+			</article>
+	`;
 };
