@@ -3,26 +3,6 @@
 // build an autocomplete widget from scratch
 // API KEY: 783e8d68
 
-const fetchData = async (searchTerm) => {
-	// we will wait for the response
-	console.log(searchTerm);
-	const response = await axios.get('http://www.omdbapi.com', {
-		params: {
-			apikey: '783e8d68',
-			s: searchTerm
-		}
-	});
-
-	// if the Response give us an error, cause no Movie was found
-	if (response.data.Error) {
-		console.log('no Movies found');
-		return [];
-	}
-
-	console.log(response.data.Search);
-	return response.data.Search;
-};
-
 // to make it more reusable, every autocomplete has a Option Function
 // if we want to use another autocomplete Component, we only have
 // to change the Option in createAutoComplete
@@ -33,6 +13,31 @@ createAutoComplete({
 		const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
 		return `<img src="${imgSrc}" />
 		${movie.Title} (${movie.Year})`;
+	},
+	onOptionSelect: (movie) => {
+		onMovieSelect(movie);
+	},
+	inputValue: (movie) => {
+		return movie.Title;
+	},
+	fetchData: async (searchTerm) => {
+		// we will wait for the response
+		console.log(searchTerm);
+		const response = await axios.get('http://www.omdbapi.com', {
+			params: {
+				apikey: '783e8d68',
+				s: searchTerm
+			}
+		});
+
+		// if the Response give us an error, cause no Movie was found
+		if (response.data.Error) {
+			console.log('no Movies found');
+			return [];
+		}
+
+		console.log(response.data.Search);
+		return response.data.Search;
 	}
 });
 
