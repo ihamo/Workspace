@@ -1,6 +1,6 @@
-const createAutoComplete = ({ root, renderOption }) => {
+const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fetchData }) => {
 	root.innerHTML = `
-        <label><b>Search for a Movie</b></label>
+        <label><b>Search</b></label>
         <input class="input" />
         <div class="dropdown">
             <div class="dropdown-menu">
@@ -17,10 +17,10 @@ const createAutoComplete = ({ root, renderOption }) => {
 	const onInput = async (event) => {
 		// event.target.value -> input value
 		// pass the input value as an argument
-		const movies = await fetchData(event.target.value);
+		const items = await fetchData(event.target.value);
 
 		// Close dropdown when input is empty after a search
-		if (!movies.length) {
+		if (!items.length) {
 			dropdown.classList.remove('is-active');
 			return;
 		}
@@ -30,20 +30,20 @@ const createAutoComplete = ({ root, renderOption }) => {
 		resultsWrapper.innerHTML = '';
 
 		// for every Movie entrie create an anchor element
-		for (let movie of movies) {
+		for (let item of items) {
 			const option = document.createElement('a');
 
 			option.classList.add('dropdown-item');
-			option.innerHTML = renderOption(movie);
+			option.innerHTML = renderOption(item);
 			// EventListening for a Click on a Item in the Dropdown Menu
 			option.addEventListener('click', (event) => {
 				// close dropdown when user click on an Item in the dropdown
 				dropdown.classList.remove('is-active');
 				// when a user click on a item in the dropdown menu, change
 				// the input value to the Title of that Movie
-				input.value = movie.Title;
+				input.value = inputValue(item);
 				// When a user click on a Movie
-				onMovieSelect(movie);
+				onOptionSelect(item);
 			});
 
 			resultsWrapper.appendChild(option);
