@@ -1,4 +1,4 @@
-const createAutoComplete = ({ root }) => {
+const createAutoComplete = ({ root, renderOption }) => {
 	root.innerHTML = `
         <label><b>Search for a Movie</b></label>
         <input class="input" />
@@ -32,13 +32,9 @@ const createAutoComplete = ({ root }) => {
 		// for every Movie entrie create an anchor element
 		for (let movie of movies) {
 			const option = document.createElement('a');
-			// Show no Poster if not avaliable
-			const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
 
 			option.classList.add('dropdown-item');
-			option.innerHTML = `<img src="${imgSrc}" />
-		${movie.Title}`;
-
+			option.innerHTML = renderOption(movie);
 			// EventListening for a Click on a Item in the Dropdown Menu
 			option.addEventListener('click', (event) => {
 				// close dropdown when user click on an Item in the dropdown
