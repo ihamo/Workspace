@@ -23,16 +23,17 @@ const fetchData = async (searchTerm) => {
 	return response.data.Search;
 };
 
+// to make it more reusable, every autocomplete has a Option Function
+// if we want to use another autocomplete Component, we only have
+// to change the Option in createAutoComplete
 createAutoComplete({
-	root: document.querySelector('.autocomplete')
-});
-
-createAutoComplete({
-	root: document.querySelector('.autocomplete-two')
-});
-
-createAutoComplete({
-	root: document.querySelector('.autocomplete-three')
+	root: document.querySelector('.autocomplete'),
+	renderOption: (movie) => {
+		// Show no Poster if not avaliable
+		const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
+		return `<img src="${imgSrc}" />
+		${movie.Title} (${movie.Year})`;
+	}
 });
 
 const onMovieSelect = async (movie) => {
