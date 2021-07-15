@@ -6,8 +6,8 @@
 // to make it more reusable, every autocomplete has a Option Function
 // if we want to use another autocomplete Component, we only have
 // to change the Option in createAutoComplete
-createAutoComplete({
-	root: document.querySelector('.autocomplete'),
+
+const autoCompleteConfig = {
 	renderOption: (movie) => {
 		// Show no Poster if not avaliable
 		const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
@@ -39,6 +39,18 @@ createAutoComplete({
 		console.log(response.data.Search);
 		return response.data.Search;
 	}
+};
+
+createAutoComplete({
+	// [...autoCompleteConfig] will copy all properties in autoCompleteConfig and use it in CreateAutoComplete
+	...autoCompleteConfig,
+	root: document.querySelector('#left-autocomplete')
+});
+
+createAutoComplete({
+	// [...autoCompleteConfig] will copy all properties in autoCompleteConfig and use it in CreateAutoComplete
+	...autoCompleteConfig,
+	root: document.querySelector('#right-autocomplete')
 });
 
 const onMovieSelect = async (movie) => {
