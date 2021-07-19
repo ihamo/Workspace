@@ -85,7 +85,23 @@ const onMovieSelect = async (movie, summaryElement, side) => {
 	}
 };
 
-const runComparison = () => {};
+const runComparison = () => {
+
+	const leftSidestat = document.querySelectorAll('#left-summary .notification');
+	const rightSidestat = document.querySelectorAll('#right-summary .notification');
+
+	leftSidestat.forEach((leftStat, index) => {
+		const rightStat = rightSidestat[index];
+
+		console.log(leftStat, rightStat.dataset.value);
+		if(rightStat.dataset.value < leftStat.dataset.value){
+			rightStat.classList.remove('is-primary');
+		}else{
+			leftStat.classList.remove('is-primary');
+		}
+		
+	});
+};
 
 const movieTemplate = (movieDetail) => {
 	// For comparison reason we have to remove the dollar sign
