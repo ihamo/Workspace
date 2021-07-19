@@ -75,6 +75,7 @@ const onMovieSelect = async (movie, summaryElement, side) => {
 
 	if (side === 'left') {
 		leftMovie = response.data;
+		document.querySelector('#left-summary').classList.add('left');
 	} else {
 		rightMovie = response.data;
 	}
@@ -84,18 +85,22 @@ const onMovieSelect = async (movie, summaryElement, side) => {
 	}
 };
 
-const runComparison = () => {
-	console.log('lets go');
-};
+const runComparison = () => {};
 
 const movieTemplate = (movieDetail) => {
+	// For comparison reason we have to remove the dollar sign
+	const dollar = parseInt(movieDetail.BoxOffice.replace(/\$/g, '').replace(/,/g, ''));
+	const metaScore = parseInt(movieDetail.Metascore);
+	const imdbRating = parseInt(movieDetail.imdbRating.replace(/\./g, ''));
+	const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
+
 	return `<article class="media">
 				<figure class="media-left">
 					<p class="image">
 						<img src="${movieDetail.Poster}"
 					</p>
 				</figure>
-				<div class="media-content>">
+				<div class="media-content">
 					<div class="content">
 						<h1>${movieDetail.Title}</h1>
 						<h6>${movieDetail.Genre}</h6>
@@ -103,7 +108,7 @@ const movieTemplate = (movieDetail) => {
 					</div>
 				</div>
 			</article>
-			<article class="notification is-primary">
+			<article value=${dollar} class="notification is-primary">
 				<p class="title">${movieDetail.Awards}</p>
 				<p class="subtitle">Awards</p>
 			</article>
